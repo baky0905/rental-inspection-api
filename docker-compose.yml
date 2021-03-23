@@ -1,0 +1,27 @@
+# https://www.rockyourcode.com/run-streamlit-with-docker-and-docker-compose/
+
+version: '3.3'
+services:
+  postgres:
+    image: postgres:12
+    env_file:
+      - .env
+    volumes:
+      - data-rental:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file: .env
+    volumes:
+      - .:/app
+    ports:
+      - 80:80
+    volumes:
+      - pgadmin-data-rental:/var/lib/pgadmin
+      - ./servers.json:/pgadmin4/servers.json
+    depends_on:
+      - postgres
+volumes:
+  data-rental:
+  pgadmin-data-rental:
