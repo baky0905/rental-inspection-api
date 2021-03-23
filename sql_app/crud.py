@@ -3,6 +3,10 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 
 
+def get_vehicles(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Vehicle).offset(skip).limit(limit).all()
+
+
 # def get_user(db: Session, user_id: int):
 #     return db.query(models.User).filter(models.User.id == user_id).first()
 
@@ -22,10 +26,6 @@ from . import models, schemas
 #     db.commit()
 #     db.refresh(db_user)
 #     return db_user
-
-
-def get_vehicles(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Vehicle).offset(skip).limit(limit).all()
 
 
 # def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
