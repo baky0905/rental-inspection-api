@@ -7,6 +7,21 @@ def get_vehicles(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Vehicle).offset(skip).limit(limit).all()
 
 
+def get_vehicle(db: Session, vehicle_id: int):
+    return db.query(models.Vehicle).filter(models.Vehicle.id == vehicle_id).first()
+
+
+def get_questions_by_vehicle_id(db: Session, vehicle_id: int):
+    return (db.query(models.Question.id, models.Question.question, models.Question.frequency_check)
+            .select_from(models.Question)
+            .join(models.CategoryQuestion)
+            .join(models.Category)
+            .join(models.Vehicle)
+            .filter(models.Vehicle.id == vehicle_id)
+            .all()
+            )
+
+
 # def get_user(db: Session, user_id: int):
 #     return db.query(models.User).filter(models.User.id == user_id).first()
 

@@ -14,6 +14,15 @@ class Vehicle(BaseModel):
     class Config:
         orm_mode = True
 
+
+class Question(BaseModel):
+    id: int
+    question: str
+    frequency_check: str
+
+    class Config:
+        orm_mode = True
+
 # class ItemBase(BaseModel):
 #     title: str
 #     description: Optional[str] = None

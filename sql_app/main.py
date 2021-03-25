@@ -42,6 +42,21 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return items
 
 
+@app.get("/vehicles/{vehicle_id}", response_model=schemas.Vehicle)
+def read_vehicle(vehicle_id: int, db: Session = Depends(get_db)):
+    vehicle = crud.get_vehicle(db, vehicle_id=vehicle_id)
+    if vehicle is None:
+        raise HTTPException(status_code=404, detail="Vehicle not found")
+    return vehicle
+
+
+@app.get("/questions/{vehicle_id}", response_model=List[schemas.Question])
+def read_questions(vehicle_id: int, db: Session = Depends(get_db)):
+    questions = crud.get_questions_by_vehicle_id(db, vehicle_id=vehicle_id)
+    if len(questions) == 0:
+        raise HTTPException(status_code=404, detail="Vehicle not found")
+    return questions
+
 # @app.post("/vehicles/", response_model=schemas.User)
 # def read_users(user: schemas.UserCreate, db: Session = Depends(get_db)):
 #     db_user = crud.get_user_by_email(db, email=user.email)
