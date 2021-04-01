@@ -73,8 +73,11 @@ vehicle_id = 2
  .join(models.Category)
  .join(models.Vehicle)
  .filter(models.Vehicle.id == vehicle_id)
- .all()
+
  )
+
+
+db.query(models.Vehicle).filter(models.Vehicle.id == vehicle_id).first()
 
 # with engine.connect() as con:
 #     rs = con.execute(

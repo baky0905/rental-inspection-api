@@ -11,6 +11,22 @@ def get_vehicle(db: Session, vehicle_id: int):
     return db.query(models.Vehicle).filter(models.Vehicle.id == vehicle_id).first()
 
 
+def create_vehicle(db: Session, payload: schemas.Vehicle):
+    db_item = models.Vehicle(**payload.dict())
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+
+def delete_vehicle(db: Session, vehicle_id: int):
+    db_item = db.query(models.Vehicle).filter(
+        models.Vehicle.id == vehicle_id).first()
+    db.delete(db_item)
+    db.commit()
+    return db_item
+
+
 def get_questions_by_vehicle_id(db: Session, vehicle_id: int):
     return (db.query(models.Question.id, models.Question.question, models.Question.frequency_check)
             .select_from(models.Question)
@@ -20,6 +36,18 @@ def get_questions_by_vehicle_id(db: Session, vehicle_id: int):
             .filter(models.Vehicle.id == vehicle_id)
             .all()
             )
+
+
+def get_checklogs(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.CheckLog).offset(skip).limit(limit).all()
+
+
+def create_check_log(db: Session, item: schemas.CheckLogCreate):
+    db_item = models.CheckLogCreate(**item.dict())
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
 
 
 # def get_user(db: Session, user_id: int):

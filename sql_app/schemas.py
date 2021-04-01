@@ -8,9 +8,8 @@ class Vehicle(BaseModel):
     make: str
     num_of_doors: int
     horsepower: int
-    image_url: str
+    image_url: Optional[str] = None
 
-    #     items: List[Item] = []
     class Config:
         orm_mode = True
 
@@ -22,6 +21,29 @@ class Question(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class CheckLog(BaseModel):
+    id: int
+    comment: Optional[str] = None
+    driver: int
+    vehicle: int
+    signature: Optional[int] = None
+
+    class Config:
+        orm_mode = True
+
+
+class CheckLogCreate(BaseModel):
+    id: int
+    comment: str
+    driver: int
+    vehicle: int
+    signature: int
+
+    class Config:
+        orm_mode = True
+
 
 # class ItemBase(BaseModel):
 #     title: str
