@@ -1,1 +1,1 @@
-uvicorn sql_app.main:app --reload
+uvicorn sql_app.main:app --reload --host 0.0.0.0 --port 8080

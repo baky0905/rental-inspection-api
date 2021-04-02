@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -25,21 +26,12 @@ class Question(BaseModel):
 
 class CheckLog(BaseModel):
     id: int
-    comment: Optional[str] = None
-    driver: int
-    vehicle: int
-    signature: Optional[int] = None
-
-    class Config:
-        orm_mode = True
-
-
-class CheckLogCreate(BaseModel):
-    id: int
-    comment: str
     driver: int
     vehicle: int
     signature: int
+
+    class Config:
+        orm_mode = True
 
     class Config:
         orm_mode = True

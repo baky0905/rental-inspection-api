@@ -26,21 +26,31 @@ def load_csv_to_database(table, list_of_columns):
             schema=None,
             con=engine,
             if_exists='append',
-            index=False,
-            # index_label='id',
+            index=True,
+            index_label='id',
             method=None)
     except Exception as e:
         print(e)
 
 
+def drop_all_tables():
+    """
+    https://chartio.com/resources/tutorials/how-to-execute-raw-sql-in-sqlalchemy/
+    """
+    with engine.connect() as con:
+        with open("db-init/sql-queries/drop-tables.sql", 'r') as file:
+            for line in file:
+                con.execute(line)
+
+
 if __name__ == "__main__":
 
-    # category
+    drop_all_tables()
+
     load_csv_to_database(
         'category',
         ['name', 'created_at'])
 
-    # vehicle
     load_csv_to_database(
         'vehicle',
         ['make',
@@ -50,7 +60,6 @@ if __name__ == "__main__":
          'created_at',
          'category'])
 
-    # driver
     load_csv_to_database(
         'driver',
         ['name',
@@ -60,7 +69,6 @@ if __name__ == "__main__":
          'password',
          'created_at'])
 
-    # check_log_questions
     load_csv_to_database(
         'question',
         ['question',
@@ -68,19 +76,16 @@ if __name__ == "__main__":
          'created_at',
          ])
 
-    # check_categories_check
     load_csv_to_database(
         'category_question',
         ['category',
          'question'])
 
-    # check_signature
     load_csv_to_database(
         'signature',
         ['signature',
          'created_at'])
 
-    # import data to check_log
     load_csv_to_database(
         'check_log',
         ['comment'
@@ -89,7 +94,6 @@ if __name__ == "__main__":
          'vehicle',
          'signature'])
 
-    # answer
     load_csv_to_database(
         'answer',
         ['answer',

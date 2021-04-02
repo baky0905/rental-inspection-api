@@ -85,9 +85,9 @@ class CheckLog(Base):
     __tablename__ = 'check_log'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    comment = Column(String)
-    created_at = Column(DateTime)
-    updated_at = Column(DateTime, server_default=text("now()"))
+    #comment = Column(String)
+    #created_at = Column(DateTime)
+    #updated_at = Column(DateTime, server_default=text("now()"))
     driver = Column(ForeignKey('driver.id'))
     vehicle = Column(ForeignKey('vehicle.id'))
     signature = Column(ForeignKey('signature.id'))

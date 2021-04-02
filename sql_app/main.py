@@ -1,5 +1,5 @@
 from typing import List
-
+# import uvicorn
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
@@ -36,9 +36,12 @@ def get_db():
         db.close()
 
 
+# Vehicle
+
+
 @app.get("/vehicles/", response_model=List[schemas.Vehicle])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_vehicles(db, skip=skip, limit=limit)
+def read_items(db: Session = Depends(get_db)):
+    items = crud.get_vehicles(db)
     return items
 
 
@@ -50,6 +53,11 @@ def read_vehicle(vehicle_id: int, db: Session = Depends(get_db)):
     return vehicle
 
 
+@app.post("/vehicle/", response_model=schemas.Vehicle, status_code=201)
+def write_vehicle(*, db: Session = Depends(get_db), payload: schemas.Vehicle):
+    return crud.create_vehicle(db, payload=payload)
+
+
 @app.delete("/vehicles/{vehicle_id}", response_model=schemas.Vehicle)
 def delete_vehicle(vehicle_id: int, db: Session = Depends(get_db)):
     vehicle = crud.get_vehicle(db, vehicle_id=vehicle_id)
@@ -59,9 +67,7 @@ def delete_vehicle(vehicle_id: int, db: Session = Depends(get_db)):
     return vehicle  # f"successfuly removed vehicle by id: {vehicle_id}"
 
 
-@app.post("/vehicle/", response_model=schemas.Vehicle, status_code=201)
-def write_vehicle(*, db: Session = Depends(get_db), payload: schemas.Vehicle):
-    return crud.create_vehicle(db, payload=payload)
+# Question
 
 
 @app.get("/questions/{vehicle_id}", response_model=List[schemas.Question])
@@ -70,6 +76,8 @@ def read_questions(vehicle_id: int, db: Session = Depends(get_db)):
     if len(questions) == 0:
         raise HTTPException(status_code=404, detail="Vehicle not found")
     return questions
+
+# CheckLog
 
 
 @app.get("/check-logs/", response_model=List[schemas.CheckLog])
@@ -80,35 +88,27 @@ def read_vehicle(db: Session = Depends(get_db)):
     return check_logs
 
 
-@app.post("/check-log/", response_model=List[schemas.CheckLog])
-def write_check_log(db: Session = Depends((get_db))):
-    check_log_item = crud.create_check_log(db)
-    return check_log_item
+@app.get("/check-logs/{checklog_id}", response_model=schemas.CheckLog)
+def read_checklog(checklog_id: int, db: Session = Depends(get_db)):
+    checklog = crud.get_checklog(db, checklog_id=checklog_id)
+    if checklog is None:
+        raise HTTPException(status_code=404, detail="Check log not found!")
+    return checklog
 
 
-# @app.post("/vehicles/", response_model=schemas.User)
-# def read_users(user: schemas.UserCreate, db: Session = Depends(get_db)):
-#     db_user = crud.get_user_by_email(db, email=user.email)
-#     if db_user:
-#         raise HTTPException(status_code=400, detail="Email already registered")
-#     return crud.create_user(db=db, user=user)
-# @app.get("/users/", response_model=List[schemas.User])
-# def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-#     users = crud.get_users(db, skip=skip, limit=limit)
-#     return users
-# @app.get("/users/{user_id}", response_model=schemas.User)
-# def read_user(user_id: int, db: Session = Depends(get_db)):
-#     db_user = crud.get_user(db, user_id=user_id)
-#     if db_user is None:
-#         raise HTTPException(status_code=404, detail="User not found")
-#     return db_user
-# @app.post("/users/{user_id}/items/", response_model=schemas.Item)
-# def create_item_for_user(
-#     user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-# ):
-#     return crud.create_user_item(db=db, item=item, user_id=user_id)
-# @app.get("/items/", response_model=List[schemas.Item])
-# def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-#     items = crud.get_items(db, skip=skip, limit=limit)
-#     return items
-#
+@app.post("/check-log/", response_model=schemas.CheckLog, status_code=201)
+def write_check_log(*, db: Session = Depends(get_db), payload: schemas.CheckLog):
+    return crud.create_check_log(db, payload=payload)
+
+
+@app.delete("/check-logs/{checklog_id}", response_model=schemas.CheckLog)
+def delete_vehicle(checklog_id: int, db: Session = Depends(get_db)):
+    vehicle = crud.get_checklog(db, checklog_id=checklog_id)
+    if not vehicle:
+        raise HTTPException(status_code=404, detail="Checklog not found")
+    vehicle = crud.delete_checklog(db, checklog_id=checklog_id)
+    return vehicle  # f"successfuly removed vehicle by id: {vehicle_id}"
+
+
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)

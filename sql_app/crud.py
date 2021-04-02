@@ -2,9 +2,11 @@ from sqlalchemy.orm import Session
 
 from . import models, schemas
 
+# Vehicle
 
-def get_vehicles(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Vehicle).offset(skip).limit(limit).all()
+
+def get_vehicles(db: Session):
+    return db.query(models.Vehicle).all()
 
 
 def get_vehicle(db: Session, vehicle_id: int):
@@ -26,6 +28,8 @@ def delete_vehicle(db: Session, vehicle_id: int):
     db.commit()
     return db_item
 
+# Question
+
 
 def get_questions_by_vehicle_id(db: Session, vehicle_id: int):
     return (db.query(models.Question.id, models.Question.question, models.Question.frequency_check)
@@ -37,43 +41,31 @@ def get_questions_by_vehicle_id(db: Session, vehicle_id: int):
             .all()
             )
 
-
-def get_checklogs(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.CheckLog).offset(skip).limit(limit).all()
+# Checklog
 
 
-def create_check_log(db: Session, item: schemas.CheckLogCreate):
-    db_item = models.CheckLogCreate(**item.dict())
+def get_checklogs(db: Session):
+    return db.query(models.CheckLog).all()
+
+
+def get_checklog(db: Session, checklog_id: int):
+    return db.query(models.CheckLog).filter(models.CheckLog.id == checklog_id).first()
+
+
+def create_check_log(db: Session, payload: schemas.CheckLog):
+    db_item = models.CheckLog(**payload.dict())
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
     return db_item
 
 
-# def get_user(db: Session, user_id: int):
-#     return db.query(models.User).filter(models.User.id == user_id).first()
+def delete_checklog(db: Session, checklog_id: int):
+    db_item = db.query(models.CheckLog).filter(
+        models.CheckLog.id == checklog_id).first()
+    db.delete(db_item)
+    db.commit()
+    return db_item
 
 
-# def get_user_by_email(db: Session, email: str):
-#     return db.query(models.User).filter(models.User.email == email).first()
-
-
-# def get_users(db: Session, skip: int = 0, limit: int = 100):
-#     return db.query(models.User).offset(skip).limit(limit).all()
-
-
-# def create_user(db: Session, user: schemas.UserCreate):
-#     fake_hashed_password = user.password + "notreallyhashed"
-#     db_user = models.User(email=user.email, hashed_password=fake_hashed_password)
-#     db.add(db_user)
-#     db.commit()
-#     db.refresh(db_user)
-#     return db_user
-
-
-# def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-#     db_item = models.Item(**item.dict(), owner_id=user_id)
-#     db.add(db_item)
-#     db.commit()
-#     db.refresh(db_item)
-#     return db_item
+# Answer
