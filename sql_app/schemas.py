@@ -1,7 +1,8 @@
 from datetime import date
 from typing import List, Optional
-
 from pydantic import BaseModel
+import enum
+from fastapi import Query
 
 
 class Vehicle(BaseModel):
@@ -44,3 +45,16 @@ class Answer(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Role(str, enum.Enum):
+    admin: str = "admin"
+    personal: str = "personel"
+
+
+class User(BaseModel):
+    name: str
+    password: str
+    # ... means this parameter is compulsory
+    mail: str = Query(..., regex="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+")
+    role: Role

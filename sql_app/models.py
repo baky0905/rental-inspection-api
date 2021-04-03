@@ -111,16 +111,13 @@ class Answer(Base):
 
     check_log1 = relationship('CheckLog')
 
+    # SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 
-# SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+    # engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
 
+    # Base.metadata.create_all(engine)
 
-# engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
-
-# Base.metadata.create_all(engine)
-
-
-# with engine.connect() as con:
-#     rs = con.execute('SELECT * FROM answer')
-#     data = rs.fetchall()
-#     pd.DataFrame(data, columns=rs.keys())
+    # with engine.connect() as con:
+    #     rs = con.execute('SELECT * FROM answer')
+    #     data = rs.fetchall()
+    #     pd.DataFrame(data, columns=rs.keys())
