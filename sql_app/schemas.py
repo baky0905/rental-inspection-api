@@ -2,7 +2,6 @@ from datetime import date
 from typing import List, Optional
 from pydantic import BaseModel
 import enum
-from fastapi import Query
 
 
 class Vehicle(BaseModel):

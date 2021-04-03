@@ -16,7 +16,7 @@ JWT_ALGORITHM = os.getenv("JWT_ALGORITHM")
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 password_context = CryptContext(schemes=["bcrypt"])
-oauth_schema = OAuth2PasswordBearer(tokenUrl="/token")
+oauth_schema = OAuth2PasswordBearer(tokenUrl="token")
 
 
 jwt_user_1 = {

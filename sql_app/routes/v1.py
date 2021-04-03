@@ -1,32 +1,16 @@
 # import uvicorn
-from fastapi import Depends, FastAPI, HTTPException, Header
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Depends, HTTPException, APIRouter
+
 from sqlalchemy.orm import Session
-from starlette.responses import RedirectResponse
-from starlette.status import HTTP_401_UNAUTHORIZED
 from typing import List
 from sql_app import crud, models, schemas
 from sql_app.database import SessionLocal, engine
-from fastapi.security import OAuth2PasswordRequestForm
-from sql_app.utils.security import authenticate_user, create_jwt_token, check_jwt_token
+from sql_app.utils.security import create_jwt_token, check_jwt_token, oauth_schema
 
 
 models.Base.metadata.create_all(bind=engine)
 
-app_v1 = FastAPI(root_path="/v1")
-
-# app_v1.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-#     allow_credentials=True,
-# )
-
-
-@app_v1.get("/")
-def main():
-    return RedirectResponse(url="/v1/docs")
+app_v1 = APIRouter()
 
 
 # Dependency
@@ -50,22 +34,10 @@ def get_db():
 #     return {"query parameter": password}
 
 
-@app_v1.post("/token", tags=["Login"])
-def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-
-    jwt_user_dict = {"username": form_data.username,
-                     "password": form_data.password}
-    jwt_user = schemas.JWTUser(**jwt_user_dict)
-    user = authenticate_user(jwt_user)
-    if user is None:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
-
-    jwt_token = create_jwt_token(user)
-    return {"token": jwt_token}
 # Vehicle
 
 
-@app_v1.get("/vehicles/", tags=["Vehicle"], response_model=List[schemas.Vehicle])
+@app_v1.get("/vehicles/", tags=["Vehicle"],   response_model=List[schemas.Vehicle])
 def read_items(db: Session = Depends(get_db)):  # x_custom: str = Header("deafult")
     items = crud.get_vehicles(db)
     return items  # {"request_body": items, "request custom header": x_custom}
