@@ -49,7 +49,10 @@ if __name__ == "__main__":
 
     load_csv_to_database(
         'category',
-        ['name', 'created_at'])
+        ['name',
+         'created_at',
+         'updated_at',
+         ])
 
     load_csv_to_database(
         'vehicle',
@@ -58,6 +61,7 @@ if __name__ == "__main__":
          'horsepower',
          'image_url',
          'created_at',
+         'updated_at',
          'category'])
 
     load_csv_to_database(
@@ -67,13 +71,17 @@ if __name__ == "__main__":
          'email',
          'username',
          'password',
-         'created_at'])
+         'created_at',
+         'updated_at',
+         ])
 
     load_csv_to_database(
         'question',
         ['question',
          'frequency_check',
          'created_at',
+         'updated_at',
+
          ])
 
     load_csv_to_database(
@@ -84,22 +92,26 @@ if __name__ == "__main__":
     load_csv_to_database(
         'signature',
         ['signature',
-         'created_at'])
+         'created_at',
+         'updated_at',
+         ])
 
     load_csv_to_database(
         'check_log',
         ['comment'
          'created_at',
+         'updated_at',
          'driver',
          'vehicle',
          'signature'])
 
     load_csv_to_database(
         'answer',
-        ['answer',
+        ['short_answer',
          'comment',
          'photo_url',
          'created_at',
+         'updated_at',
          'question',
          'check_log'
          ])

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
-
 from . import models, schemas
+
+# https://hackersandslackers.com/database-queries-sqlalchemy-orm/
 
 # Vehicle
 
@@ -69,3 +70,26 @@ def delete_checklog(db: Session, checklog_id: int):
 
 
 # Answer
+
+def get_answers(db: Session):
+    return db.query(models.Answer).all()
+
+
+def create_answer(db: Session, payload: schemas.Answer):
+    db_item = models.Answer(**payload.dict())
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+
+def get_answer(db: Session, answer_id: int):
+    return db.query(models.Answer).filter(models.Answer.id == answer_id).first()
+
+
+def delete_answer(db: Session, answer_id: int):
+    db_item = db.query(models.Answer).filter(
+        models.Answer.id == answer_id).first()
+    db.delete(db_item)
+    db.commit()
+    return db_item

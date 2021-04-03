@@ -101,7 +101,7 @@ class Answer(Base):
     __tablename__ = 'answer'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    answer = Column(String)
+    short_answer = Column(String)
     created_at = Column(DateTime)
     updated_at = Column(DateTime, server_default=text("now()"))
     comment = Column(String)

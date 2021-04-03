@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 # import uvicorn
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
@@ -108,6 +108,28 @@ def delete_vehicle(checklog_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Checklog not found")
     vehicle = crud.delete_checklog(db, checklog_id=checklog_id)
     return vehicle  # f"successfuly removed vehicle by id: {vehicle_id}"
+
+
+# Answer
+
+@app.get("/answers/", response_model=List[schemas.Answer])
+def get_answers(db: Session = Depends(get_db)):
+    answers = crud.get_answers(db)
+    return answers
+
+
+@app.post("/answer/", response_model=schemas.Answer, status_code=201)
+def write_answer(*, db: Session = Depends(get_db), payload: schemas.Answer):
+    return crud.create_answer(db, payload=payload)
+
+
+@app.delete("/answers/{answer_id}", response_model=schemas.Answer)
+def delete_vehicle(answer_id: int, db: Session = Depends(get_db)):
+    answer = crud.get_answer(db, answer_id=answer_id)
+    if not answer:
+        raise HTTPException(status_code=404, detail="Answer not found")
+    answer = crud.delete_answer(db, answer_id=answer_id)
+    return answer
 
 
 # if __name__ == "__main__":
