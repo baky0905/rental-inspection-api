@@ -5,4 +5,8 @@ pandas==1.2.2
 python-dotenv==0.15.0
 psycopg2-binary
 SQLAlchemy==1.3.20
+pyjwt
+passlib
+bcrypt
+python-multipart
 sqlacodegen # https://pypi.org/project/sqlacodegen/

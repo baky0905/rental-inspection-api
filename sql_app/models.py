@@ -5,9 +5,7 @@ from sql_app.database import Base
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-import os
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
 load_dotenv(dotenv_path=".env")
 
 Base = declarative_base()
