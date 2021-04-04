@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from sql_app import crud, models, schemas
 from sql_app.database import SessionLocal, engine
-from sql_app.utils.security import create_jwt_token, check_jwt_token, oauth_schema
+from sql_app.utils.security import oauth_schema
 
 
 models.Base.metadata.create_all(bind=engine)

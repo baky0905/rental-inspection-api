@@ -51,13 +51,13 @@ class Role(str, enum.Enum):
     personal: str = "personel"
 
 
-class JWTUser(BaseModel):
+class User(BaseModel):
     username: str
     password: str
     # ... means this parameter is compulsory
     # mail: str = Query(..., regex="[^@ \t\r\n]+@[^@ # \t\r\n]+\.[^@ \t\r\n]+")
-    disabled: bool = False
+    #disabled: bool = False
     role: Role = None
 
-    # class Config:
-    #     orm_mode = True
+    class Config:
+        orm_mode = True

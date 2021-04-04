@@ -1,7 +1,7 @@
-from sqlalchemy.sql import text
 from sqlalchemy import create_engine
 import pandas as pd
 import os
+from db_init.sql_queries import sql_queries
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
@@ -19,7 +19,7 @@ def load_csv_to_database(table, list_of_columns):
         list_of_columns (list): list of columns that will be uploaded from
         a csv to table in database.
     """
-    df = pd.read_csv(f"db-init/{table}.csv")
+    df = pd.read_csv(f"db_init/{table}.csv")
     try:
         df.filter(list_of_columns).to_sql(
             table,
@@ -38,14 +38,19 @@ def drop_all_tables():
     https://chartio.com/resources/tutorials/how-to-execute-raw-sql-in-sqlalchemy/
     """
     with engine.connect() as con:
-        with open("db-init/sql-queries/drop-tables.sql", 'r') as file:
-            for line in file:
-                con.execute(line)
+        con.execute(sql_queries.drop_all_tables)
+
+
+def create_all_tables():
+    with engine.connect() as con:
+        con.execute(sql_queries.create_all_tables)
 
 
 if __name__ == "__main__":
 
     drop_all_tables()
+
+    create_all_tables()
 
     load_csv_to_database(
         'category',
@@ -81,7 +86,6 @@ if __name__ == "__main__":
          'frequency_check',
          'created_at',
          'updated_at',
-
          ])
 
     load_csv_to_database(

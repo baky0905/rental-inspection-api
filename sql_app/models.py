@@ -1,10 +1,15 @@
-import pandas as pd
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import (
+    DateTime,
+    Column,
+    ForeignKey,
+    Integer,
+    String,
+    text)
 from sqlalchemy.orm import relationship
-from sql_app.database import Base
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, text
+from sql_app.database import Base, engine
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=".env")
 
@@ -109,13 +114,26 @@ class Answer(Base):
 
     check_log1 = relationship('CheckLog')
 
-    # SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 
-    # engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
+class User(Base):
+    __tablename__ = 'user'
 
-    # Base.metadata.create_all(engine)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String)
+    password = Column(String)
+    #mail = Column(String)
+    role = Column(String)
 
-    # with engine.connect() as con:
-    #     rs = con.execute('SELECT * FROM answer')
-    #     data = rs.fetchall()
-    #     pd.DataFrame(data, columns=rs.keys())
+
+Base.metadata.create_all(engine)
+
+# SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+
+# engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
+
+# Base.metadata.create_all(engine)
+
+# with engine.connect() as con:
+#     rs = con.execute('SELECT * FROM answer')
+#     data = rs.fetchall()
+#     pd.DataFrame(data, columns=rs.keys())

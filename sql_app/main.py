@@ -29,8 +29,6 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-# app.mount("/v1", app_v1)
-
 
 @app.post("/token", summary="It returns JWT Token.", tags=["Login"])
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
