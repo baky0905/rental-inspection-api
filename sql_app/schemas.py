@@ -51,7 +51,7 @@ class Role(str, enum.Enum):
     personal: str = "personel"
 
 
-class User(BaseModel):
+class JWTUser(BaseModel):
     username: str
     password: str
     # ... means this parameter is compulsory
