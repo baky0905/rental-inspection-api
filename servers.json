@@ -1,13 +1,13 @@
 {
-    "Servers": {
-        "Postgres": {
-            "Name": "PostgreSQL 12",
-            "Port": 5432,
-            "Group": "Servers",
-            "SSLMode": "prefer",
-            "Username": "postgres",
-            "Host": "postgres",
-            "MaintenanceDB": "postgres"
-        }
+  "Servers": {
+    "Postgres": {
+      "Name": "PostgreSQL 13",
+      "Port": 5432,
+      "Group": "Servers",
+      "SSLMode": "prefer",
+      "Username": "postgres",
+      "Host": "postgres",
+      "MaintenanceDB": "postgres"
     }
+  }
 }

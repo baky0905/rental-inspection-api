@@ -3,9 +3,8 @@ from fastapi import Depends, HTTPException, APIRouter
 
 from sqlalchemy.orm import Session
 from typing import List
-from sql_app import crud, models, schemas
-from sql_app.database import SessionLocal, engine
-from sql_app.utils.security import oauth_schema
+from app import crud, models, schemas
+from app.database import SessionLocal, engine
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -22,25 +21,13 @@ def get_db():
         db.close()
 
 
-# User
-
-# @app_v1.post("/user")
-# def post_user(user: schemas.User):
-#     return {"request_body": user}
-
-
-# @app_v1.get("/user")
-# def get_user_validation(password: str):
-#     return {"query parameter": password}
-
-
 # Vehicle
 
 
 @app_v1.get("/vehicles/", tags=["Vehicle"],   response_model=List[schemas.Vehicle])
-def read_items(db: Session = Depends(get_db)):  # x_custom: str = Header("deafult")
+def read_items(db: Session = Depends(get_db)):
     items = crud.get_vehicles(db)
-    return items  # {"request_body": items, "request custom header": x_custom}
+    return items
 
 
 @app_v1.get("/vehicle/{vehicle_id}", tags=["Vehicle"], response_model=schemas.Vehicle)

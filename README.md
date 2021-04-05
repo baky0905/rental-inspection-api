@@ -44,16 +44,16 @@
 
 
 - [About The Project](#about-the-project)
-  - [Built With](#built-with)
+- [Project Structure](#project-structure)
+- [Backend Requirements](#backend-requirements)
+- [Backend local development](#backend-local-development)
+- [Backend local development, additional details](#backend-local-development-additional-details)
+  - [General workflow](#general-workflow)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
-- [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 
 
 
@@ -73,14 +73,100 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
-### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
+## Project Structure
+
+```
+.
+├── README.md
+├── backend
+│   ├── Dockerfile
+│   ├── __init__.py
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── crud.py
+│   │   ├── database.py
+│   │   ├── load.py
+│   │   ├── main.py
+│   │   ├── models.py
+│   │   ├── routes
+│   │   ├   └──v1.py
+│   │   ├── schemas.py
+│   │   └── utils
+│   ├── entrypoint.sh
+│   ├── requirements.txt
+│   └── venv
+├── db_init
+│   ├── __init__.py
+│   ├── data
+│   │   ├── answer.csv
+│   │   ├── category.csv
+│   │   ├── category_question.csv
+│   │   ├── check_log.csv
+│   │   ├── driver.csv
+│   │   ├── question.csv
+│   │   ├── signature.csv
+│   │   └── vehicle.csv
+│   ├── db-drop-create-load-csvs.py
+│   └── sql_queries
+│       ├── create-tables.sql
+│       ├── drop-tables.sql
+│       ├── example_query.sql
+│       └── sql_queries.py
+├── docker-compose.yml
+├── img
+└── servers.json
+```
+
+## Backend Requirements
+
+* [Docker](https://www.docker.com/).
+* [Docker Compose](https://docs.docker.com/compose/install/).
+
+## Backend local development
+
+* Start the stack with Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+- Now you can open your browser and interact with these URLs:
+
+Backend, JSON based web API based on OpenAPI: http://localhost:8000/openapi.json
+
+Automatic interactive documentation with Swagger UI (from the OpenAPI backend): http://localhost:8000/docs
+
+Alternative automatic documentation with ReDoc (from the OpenAPI backend): http://localhost:8000/redoc
+
+PGAdmin, PostgreSQL web administration: http://localhost:5050/browser/
+
+  - login: 
+    - username: admin@example.com
+      - password: admin
+  - database password: 1234
 
 
+To check the logs, run:
+
+```bash
+docker-compose logs
+```
+
+To check the logs of a specific service, add the name of the service, e.g.:
+
+```bash
+docker-compose logs server
+```
+
+If your Docker is not running in `localhost` (the URLs above wouldn't work) check the sections below on **Development with Docker Toolbox** and **Development with a custom IP**.
+
+**Note**: The first time you start your stack, it might take a minute for it to be ready. While the backend waits for the database to be ready and configures everything. You can check the logs to monitor it.
+
+
+## Backend local development, additional details
+
+### General workflow
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -88,31 +174,26 @@ This section should list any major frameworks that you built your project using.
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
-   ```
+By default, the dependencies are managed with requirements.txt and pip.
 
 
+Next, open your editor at `./backend/app/` (instead of the project root: `./`), so that you see an `./app/` directory with your code inside. That way, your editor will be able to find all the imports, etc. Make sure your editor uses the environment you just created.
+
+```console
+$ docker-compose up -d
+```
+
+and then `exec` inside the running container:
+
+```console
+$ docker-compose exec server bash
+```
+
+You should see an output like:
+
+```console
+root@7f2607af31c3:/app#
+```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -129,17 +210,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
 
 
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 
 
@@ -158,37 +228,3 @@ Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.c
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-<!-- * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com) -->
-
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-<!-- [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png -->

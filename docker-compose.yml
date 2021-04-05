@@ -1,14 +1,25 @@
 #https://www.jeffastor.com/blog/pairing-a-postgresql-db-with-your-dockerized-fastapi-app
 
-version: '3.3'
+version: '3.8'
 services:
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/:/backend/
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    env_file:
+      - ./backend/.env
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
 
   postgres:
-    image: postgres:12
+    image: postgres:13-alpine
     env_file:
-      - .env
-    environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
+      - ./backend/.env
     volumes:
       - data-rental:/var/lib/postgresql/data
     ports:
@@ -16,43 +27,17 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    env_file: .env
+    env_file:
+      - ./backend/.env
     volumes:
-      - .:/sql_app
+      - .:/app
     ports:
-      - "5050:5050"
+      - 5050:5050
     volumes:
       - pgadmin-data-rental:/var/lib/pgadmin
       - ./servers.json:/pgadmin4/servers.json
     depends_on:
       - postgres
-
-  # backend:
-  #   image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
-  #   depends_on:
-  #     - postgres
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - "8888:8888"
-  #   build:
-  #     context: ./
-  #     dockerfile: backend.dockerfile
-  #   volumes:
-  #     - ./sql_app:/sql_app
-
-  # api:
-  #   build: .
-  #   env_file: .env
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - 8080:8080
-  #   entrypoint:
-  #     - sh
-  #     - entrypoint.sh
-  #   depends_on:
-  #     - postgres
 
 volumes:
   data-rental:

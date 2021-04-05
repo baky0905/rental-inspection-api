@@ -1,13 +1,13 @@
-from sqlalchemy import create_engine
 import pandas as pd
-import os
-from db_init.sql_queries import sql_queries
-
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
-load_dotenv(dotenv_path=".env")
 
-SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+from sql_queries import sql_queries
+import os
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path="backend/.env")
+
+SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI_LOCAL")
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
 
@@ -19,7 +19,7 @@ def load_csv_to_database(table, list_of_columns):
         list_of_columns (list): list of columns that will be uploaded from
         a csv to table in database.
     """
-    df = pd.read_csv(f"db_init/{table}.csv")
+    df = pd.read_csv(f"db_init/data/{table}.csv")
     try:
         df.filter(list_of_columns).to_sql(
             table,

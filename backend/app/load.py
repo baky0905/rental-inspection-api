@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
-from sql_app.database import SessionLocal, engine
-from sql_app import models
+from backend.app.database import SessionLocal, engine
+from backend.app import models
 import csv
 import datetime
 import pandas as pd

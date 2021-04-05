@@ -6,15 +6,14 @@ from sqlalchemy import (
     String,
     text)
 from sqlalchemy.orm import relationship
-from sql_app.database import Base, engine
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from .database import Base, engine
+# from sqlalchemy.ext.declarative import declarative_base
 
-from dotenv import load_dotenv
-load_dotenv(dotenv_path=".env")
+# from dotenv import load_dotenv
+# load_dotenv(dotenv_path=".env")
 
-Base = declarative_base()
-metadata = Base.metadata
+# Base = declarative_base()
+# metadata = Base.metadata
 
 
 class Category(Base):
@@ -125,15 +124,4 @@ class User(Base):
     role = Column(String)
 
 
-Base.metadata.create_all(engine)
-
-# SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
-
-# engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
-
 # Base.metadata.create_all(engine)
-
-# with engine.connect() as con:
-#     rs = con.execute('SELECT * FROM answer')
-#     data = rs.fetchall()
-#     pd.DataFrame(data, columns=rs.keys())

@@ -296,3 +296,6 @@ donotversion/*
 .vscode
 .mypy_cache
 docker-stack.yml
+
+
+backend/.env

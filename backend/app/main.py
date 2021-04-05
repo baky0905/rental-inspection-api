@@ -1,15 +1,19 @@
 # import uvicorn
 from fastapi import Depends, FastAPI, HTTPException
-from sql_app.routes.v1 import app_v1
+from .routes.v1 import app_v1
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.status import HTTP_401_UNAUTHORIZED
-from sql_app.utils.security import check_jwt_token
 from datetime import datetime
-from sql_app.utils.security import authenticate_user, create_jwt_token, check_jwt_token
-from sql_app import schemas
+from .utils.security import authenticate_user, create_jwt_token, check_jwt_token
+
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
+
+from . import schemas, models
+from .database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Vehicle Inspection API Documentation",
@@ -48,7 +52,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
 async def middleware(request: Request, call_next):
     start_time = datetime.utcnow()
     # modify request
-    if not any(word in str(request.url) for word in ["/token", "/docs", "/openapi.json"]):
+    if not any(word in str(request.url) for word in ["/token", "/docs", "/redoc", "/openapi.json"]):
         try:
             jwt_token = request.headers["Authorization"].split("Bearer ")[1]
             is_valid = check_jwt_token(jwt_token)
