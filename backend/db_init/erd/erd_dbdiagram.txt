@@ -1,0 +1,95 @@
+
+Table "vehicle" {
+  "id" INT [pk, increment]
+  "make" VARCHAR
+  "num_of_doors" INT
+  "horsepower" INT
+  "image_url" VARCHAR
+  "created_at" TIMESTAMP 
+  "updated_at" TIMESTAMP [default: `now()`]
+  "category" INT 
+}
+
+
+Table "signature" {
+  "id" INT [pk, increment]
+  "signature" VARCHAR
+  "num_of_doors" INT
+  "created_at" TIMESTAMP 
+  "updated_at" TIMESTAMP [default: `now()`]
+}
+
+
+Table "category" {
+  "id" INT [pk, increment]
+  "name" VARCHAR
+  "created_at"  TIMESTAMP 
+  "updated_at"  TIMESTAMP [default: `now()`]
+}
+
+Table "category_question" {
+  "id" INT [pk, increment]
+  "category" INT 
+  "question" INT
+}
+
+Table "answer" {
+  "id" INT [pk]
+  "short_answer" VARCHAR
+  "created_at"  TIMESTAMP 
+  "updated_at"  TIMESTAMP [default: `now()`]
+  "comment" VARCHAR
+  "photo_url" VARCHAR
+  "question" INT
+  "check_log" INT
+  
+}
+
+Table "question" {
+  "id" INT [pk]
+  "question" VARCHAR
+  "frequency_check" VARCHAR
+  "created_at"  TIMESTAMP
+  "updated_at"  TIMESTAMP [default: `now()`]
+}
+
+
+Table "check_log" {
+  "id" INT [pk, increment]
+  "comment" VARCHAR
+  "created_at"  TIMESTAMP
+  "updated_at"  TIMESTAMP [default: `now()`]
+  "driver" INT
+  "vehicle" INT
+  "signature" INT
+}
+
+
+Table "driver" {
+  "id" INT [pk, increment]
+  "name" VARCHAR
+  "phone_number" INT
+  "email" VARCHAR
+  "username" VARCHAR
+  "password" VARCHAR
+  "created_at"  TIMESTAMP 
+  "updated_at"  TIMESTAMP [default: `now()`]
+  
+}
+
+
+Ref: "category"."id" < "category_question"."category"
+
+Ref: "category"."id" < "vehicle"."category"
+
+Ref: "driver"."id" < "check_log"."driver"
+
+Ref: "vehicle"."id" < "check_log"."vehicle"
+
+Ref: "signature"."id" < "check_log"."signature"
+
+
+Ref: "check_log"."id" < "answer"."check_log"
+
+Ref: "question"."id" < "category_question"."question"
+

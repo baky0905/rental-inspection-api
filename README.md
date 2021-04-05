@@ -43,25 +43,27 @@
 
 
 
+- [About The Project](#about-the-project)
+- [Backend Requirements](#backend-requirements)
+- [Backend local development](#backend-local-development)
+- [Backend local development, additional details](#backend-local-development-additional-details)
+  - [General workflow](#general-workflow)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
 - [Entity Relationshop Diagram (ERD)](#entity-relationshop-diagram-erd)
-  - [Backend Requirements](#backend-requirements)
-  - [Backend local development](#backend-local-development)
-  - [Backend local development, additional details](#backend-local-development-additional-details)
-    - [General workflow](#general-workflow)
-  - [Getting Started](#getting-started)
-  - [Project Structure](#project-structure)
-  - [Available REST API endpoints](#available-rest-api-endpoints)
-  - [Roadmap](#roadmap)
-  - [License](#license)
-  - [Contact](#contact)
+- [Initialization of the Database](#initialization-of-the-database)
+- [Available REST API endpoints](#available-rest-api-endpoints)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Contact](#contact)
 
 
 
 
 ## About The Project
 
-This project is an attempt to develop a backend for an potential front-end vehicle inspection web applictaion (web application will not be a part of this project):
-  - Model the data into a relational datamodel
+This project is an attempt to develop a backend for vehicle inspection web applictaion (web application will not be a part of this project). Project included tasks as follows:
+  - Data modelling of the vehicle inspection domain
   - Implement the data model into a PostgreSQL relational database with an initial data tables needed for the web application to function 
   - Develop data REST API using Python and FastAPI on top of the PostgreSQL database that will enable relevant CRUD operations for the vehicle inspection application. 
 
@@ -79,13 +81,11 @@ the inspection question, i.e. example of CRUD operations.
 
 ![](img/answer.gif)
 
-# Entity Relationshop Diagram (ERD)
-
-![](img/erd.png)
-
 
 
 ## Backend Requirements
+
+**I am developing in WSL2, Ubuntu 20.04 using Visual Studio Code**
 
 * [Docker](https://www.docker.com/).
 * [Docker Compose](https://docs.docker.com/compose/install/).
@@ -113,6 +113,7 @@ PGAdmin, PostgreSQL web administration: http://localhost:5050/browser/
       - password: admin
   - database password: 1234
 
+Since it is only a development app, .env with all the passwords and secrets has been included in version control. Do not do that if you are forking the project :)
 
 To check the logs, run:
 
@@ -207,7 +208,56 @@ root@7f2607af31c3:/app#
 └── servers.json
 ```
 
+
+## Entity Relationshop Diagram (ERD)
+
+![](img/erd.png)
+
+ERD has been designed in [https://dbdiagram.io/](https://dbdiagram.io/), and I highly recommend it. Schema can be found in the [local folder](./db_init/erd/erd_dbdiagram.txt), and diagramm can be easily reconstructed from it via the website.
+
+![](img/erd_website.png)
+
+
+## Initialization of the Database
+
+Create a virtual environment while in ./backend folder.
+
+Run following command:
+```bash
+python3 -m venv venv
+```
+
+and to activate the env:
+
+
+```bash
+python3 venv/bin/activate
+```
+
+Install packages from requirements.txt with pip3:
+
+```bash
+pip3 install -r requirements.txt
+```
+
+Finally run a python script `db-drop-create-load-csvs.py` located in db_init folder:
+
+```bash
+python3 db_init/db-drop-create-load-csvs.py 
+```
+
+The `db-drop-create-load-csvs.py` script will do the following:
+
+- **drop all tables** in postgres database - [script](./backend/db_init/sql_queries/sql_queries.py)
+- **create all tables** in postgres database - [script](./backend/db_init/sql_queries/sql_queries.py)
+- populate the created tables with dat located in [data_init folder](./backend/db_init/)
+
+
+
+
 ## Available REST API endpoints
+
+![](img/endpoints.png)
 
 <!-- ROADMAP -->
 ## Roadmap
