@@ -43,80 +43,47 @@
 
 
 
-- [About The Project](#about-the-project)
-- [Project Structure](#project-structure)
-- [Backend Requirements](#backend-requirements)
-- [Backend local development](#backend-local-development)
-- [Backend local development, additional details](#backend-local-development-additional-details)
-  - [General workflow](#general-workflow)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
-- [License](#license)
-- [Contact](#contact)
+- [Entity Relationshop Diagram (ERD)](#entity-relationshop-diagram-erd)
+  - [Backend Requirements](#backend-requirements)
+  - [Backend local development](#backend-local-development)
+  - [Backend local development, additional details](#backend-local-development-additional-details)
+    - [General workflow](#general-workflow)
+  - [Getting Started](#getting-started)
+  - [Project Structure](#project-structure)
+  - [Available REST API endpoints](#available-rest-api-endpoints)
+  - [Roadmap](#roadmap)
+  - [License](#license)
+  - [Contact](#contact)
 
 
 
-<!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+This project is an attempt to develop a backend for an potential front-end vehicle inspection web applictaion (web application will not be a part of this project):
+  - Model the data into a relational datamodel
+  - Implement the data model into a PostgreSQL relational database with an initial data tables needed for the web application to function 
+  - Develop data REST API using Python and FastAPI on top of the PostgreSQL database that will enable relevant CRUD operations for the vehicle inspection application. 
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+End result can be visualised and tested via API documentation locally when the stack is running (more info later on)
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should element DRY principles to the rest of your life :smile:
+![](img/docs.gif)
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have have contributed to expanding this template!
+All API endpoints need a JWT token based to be accessed. There is one dummy
+user that has privilages to be authorized.
 
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
+![](img/authorize.gif)
+
+Example of crud operation where in the inspection process, user could answer
+the inspection question, i.e. example of CRUD operations.
+
+![](img/answer.gif)
+
+# Entity Relationshop Diagram (ERD)
+
+![](img/erd.png)
 
 
-## Project Structure
-
-```
-.
-├── README.md
-├── backend
-│   ├── Dockerfile
-│   ├── __init__.py
-│   ├── app
-│   │   ├── __init__.py
-│   │   ├── crud.py
-│   │   ├── database.py
-│   │   ├── load.py
-│   │   ├── main.py
-│   │   ├── models.py
-│   │   ├── routes
-│   │   ├   └──v1.py
-│   │   ├── schemas.py
-│   │   └── utils
-│   ├── entrypoint.sh
-│   ├── requirements.txt
-│   └── venv
-├── db_init
-│   ├── __init__.py
-│   ├── data
-│   │   ├── answer.csv
-│   │   ├── category.csv
-│   │   ├── category_question.csv
-│   │   ├── check_log.csv
-│   │   ├── driver.csv
-│   │   ├── question.csv
-│   │   ├── signature.csv
-│   │   └── vehicle.csv
-│   ├── db-drop-create-load-csvs.py
-│   └── sql_queries
-│       ├── create-tables.sql
-│       ├── drop-tables.sql
-│       ├── example_query.sql
-│       └── sql_queries.py
-├── docker-compose.yml
-├── img
-└── servers.json
-```
 
 ## Backend Requirements
 
@@ -195,19 +162,60 @@ You should see an output like:
 root@7f2607af31c3:/app#
 ```
 
-<!-- USAGE EXAMPLES -->
-## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+## Project Structure
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```
+.
+├── README.md
+├── backend
+│   ├── Dockerfile
+│   ├── __init__.py
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── crud.py
+│   │   ├── database.py
+│   │   ├── load.py
+│   │   ├── main.py
+│   │   ├── models.py
+│   │   ├── routes
+│   │   ├   └──v1.py
+│   │   ├── schemas.py
+│   │   └── utils
+│   ├── entrypoint.sh
+│   ├── requirements.txt
+│   └── venv
+├── db_init
+│   ├── __init__.py
+│   ├── data
+│   │   ├── answer.csv
+│   │   ├── category.csv
+│   │   ├── category_question.csv
+│   │   ├── check_log.csv
+│   │   ├── driver.csv
+│   │   ├── question.csv
+│   │   ├── signature.csv
+│   │   └── vehicle.csv
+│   ├── db-drop-create-load-csvs.py
+│   └── sql_queries
+│       ├── create-tables.sql
+│       ├── drop-tables.sql
+│       ├── example_query.sql
+│       └── sql_queries.py
+├── docker-compose.yml
+├── img
+└── servers.json
+```
 
-
+## Available REST API endpoints
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/baky0905/rental-inspection-api/issues) for a list of proposed features (and known issues).
+
+To do:
+
 
 
 
@@ -219,12 +227,10 @@ See the [open issues](https://github.com/othneildrew/Best-README-Template/issues
 Distributed under the MIT License. See `LICENSE` for more information.
 
 
-
-<!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Kristijan Bakaric - [twitter.com/kbakaric1](https://twitter.com/kbakaric1) 
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/baky0905/rental-inspection-api](https://github.com/baky0905/rental-inspection-api)
 
 
