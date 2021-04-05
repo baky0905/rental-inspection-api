@@ -292,3 +292,7 @@ dmypy.json
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode
 donotversion/*
+
+.vscode
+.mypy_cache
+docker-stack.yml

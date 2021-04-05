@@ -20,8 +20,8 @@ oauth_schema = OAuth2PasswordBearer(tokenUrl="token")
 
 
 jwt_user_1 = {
-    "username": "user1",
-    "password": "$2b$12$4d.cQ3yR0WKQ9STJca2AteL2U8DpMjql6eDsOqWDI3DxGdxN6mKJG",
+    "username": "kbaka",
+    "password": "$2b$12$dtVWAX7AEnAmFlvNIiP7J.6RaZYk5NO3KXEmJk2HZdmpyz549e3um",
     "disabled": False,
     "role": "admin"
 }

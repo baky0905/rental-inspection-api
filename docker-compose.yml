@@ -1,3 +1,5 @@
+#https://www.jeffastor.com/blog/pairing-a-postgresql-db-with-your-dockerized-fastapi-app
+
 version: '3.3'
 services:
 
@@ -5,6 +7,8 @@ services:
     image: postgres:12
     env_file:
       - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - data-rental:/var/lib/postgresql/data
     ports:
@@ -14,14 +18,28 @@ services:
     image: dpage/pgadmin4
     env_file: .env
     volumes:
-      - .:/app
+      - .:/sql_app
     ports:
-      - 80:80
+      - "5050:5050"
     volumes:
       - pgadmin-data-rental:/var/lib/pgadmin
       - ./servers.json:/pgadmin4/servers.json
     depends_on:
       - postgres
+
+  # backend:
+  #   image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
+  #   depends_on:
+  #     - postgres
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8888:8888"
+  #   build:
+  #     context: ./
+  #     dockerfile: backend.dockerfile
+  #   volumes:
+  #     - ./sql_app:/sql_app
 
   # api:
   #   build: .
