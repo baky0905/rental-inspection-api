@@ -209,6 +209,26 @@ root@7f2607af31c3:/app#
 ```
 
 
+- `database.py`
+  - imports sqlalchemy part and engine, SessionLocal and Base as declarative_base()
+- `models.py`
+  - Creates SQLAlchemy models from the Base class
+  - These classes are the SQLAlchemy models.
+  - The __tablename__ attribute tells SQLAlchemy the name of the table to use in the database for each of these models.
+  - Create model attributes/columns
+  - Create the relationships via relationship provided by SQLAlchemy ORM. 
+- `schemas.py`
+  - These Pydantic models define more or less a "schema" (a valid data shape).
+- `crud.py`
+  - In this file we will have reusable functions to interact with the data in the database.
+  - CRUD comes from: Create, Read, Update, and Delete.
+- `routes/v1.py`
+  - contains all the api endpoints for the api version1
+- `main.py`
+  - integrates and uses all the other parts from above
+  - contains middleware with login endpoints, all endpoints require jwt token
+- `utils/security.py`
+  - authentication and jwt token creation and verification related functions.
 ## Entity Relationshop Diagram (ERD)
 
 ![](img/erd.png)
