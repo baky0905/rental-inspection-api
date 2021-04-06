@@ -10,11 +10,7 @@
   <p align="center">
     More info.
     <br />
-    <a href="https://github.com/baky0905/rental-inspection-api"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="./">View Demo</a>
-    ·
     <a href="https://github.com/baky0905/rental-inspection-api/issues">Report Bug</a>
     ·
     <a href="https://github.com/baky0905/rental-inspection-api/issues">Request Feature</a>
