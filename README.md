@@ -8,7 +8,6 @@
   <h3 align="center">Vehicle Rental Inspection Data Modelling and REST API </h3>
 
   <p align="center">
-    More info.
     <br />
     <br />
     <a href="https://github.com/baky0905/rental-inspection-api/issues">Report Bug</a>
