@@ -33,11 +33,25 @@
 
 
 
+## What is a vehicle inspection app and how could it look like?
+
+![image](https://user-images.githubusercontent.com/25346727/113972190-8877a680-983a-11eb-9e59-8d0690794c45.png)
+
+Vehicle inspection app is an application where drivers would "rent" cars from their car fleet, but before they can checkout the car, they need to preform an inspection
+, i.e. go through a set of questions based on the vehicle category type, answer them, take photos and comment.
+
+This is my idea of the user flow: 
+
+> **user finds the right vehicle --> inspect the vehicle --> check-out the vehicle:**
+
+User arrives at a place where he/she either chooses a dropdown/seachbar to find the right vehicle that he is going to inspect OR he uses the QR code to scan for the right vehicle. After the right vehicle has been selected, the vehicle’s photo and summary appears as a QC of the right selection.
+In addition, it shows if the vehicle has been inspected within its frequncy rules. Need inspection (red notification shows up next to the inspection button) or doesn’t need inspection. If there is a need for inspection, user must perform an inspecton. Otherwise, if someone else has done an inspection already, user can choose if he wishes to checkout a vehicle + some notes.
+
+User starts inspection of the vehicle. Goes though a checklist that is characteristic for a vehicle type, answers if it is ok or not ok, and if not ok comments it together with a photo of an issue area on the vehicle. After the inspection is complete, user goes to the checkout-out page.
+
+User sees a summary of the inspection on aggregated cards - number of issues, number of photos, number of comments, and finally a signature box with a submit a check-out button.
+
 ## About The Project
-
-What is a vehicle inspection app?
-
-
 
 In this project, I developed a backend for the vehicle inspection web application (web application will not be a part of this project). 
 
