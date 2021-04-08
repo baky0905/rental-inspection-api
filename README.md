@@ -35,6 +35,10 @@
 
 ## About The Project
 
+What is a vehicle inspection app?
+
+
+
 In this project, I developed a backend for the vehicle inspection web application (web application will not be a part of this project). 
 
 The project included tasks as follows:
@@ -196,7 +200,7 @@ Below is a structure of the project. I will briefly describe most important pyth
 
 ![](img/erd.png)
 
-ERD has been designed in [https://dbdiagram.io/](https://dbdiagram.io/), and I highly recommend it. Schema can be found in the [local folder](./db_init/erd/erd_dbdiagram.txt), and diagram can easily be reconstructed from it via the website.
+ERD has been designed in [https://dbdiagram.io/](https://dbdiagram.io/), and I highly recommend it. Schema can be found in the [local folder](./backend/db_init/erd/erd_dbdiagram.txt), and diagram can easily be reconstructed from it via the website.
 
 ![](img/erd_website.png)
 
